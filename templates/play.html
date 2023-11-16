@@ -5,7 +5,33 @@
     <title>Title</title>
 </head>
 <body>
-    Th{{ query }}
 
+    <h1>How does Google autocomplete this query?</h1>
+
+        <div class="query"> {{ query }}</div>
+        <br>
+        <input type="text" id="answer" onchange="answer()">
+        <br>
+        <div class="answers">
+            {%for i in range(10,0,-1)%}
+                <input id="answer{{ i }}" type="text" disabled="true"> <label>{{ i*1000 }} Points</label>
+                <br>
+
+            {%endfor%}
+        </div>
+
+<script>
+function answer() {
+    x = document.getElementById("answer").value
+    {% for i in answers %}
+        if ({i}.includes(x) {
+    console.log("Woof");
+} else {
+    console.log("Non woof.");
+}
+    {% endfor %}
+
+}
+</script>
 </body>
 </html>
