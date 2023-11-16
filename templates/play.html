@@ -8,30 +8,36 @@
 
     <h1>How does Google autocomplete this query?</h1>
 
-        <div class="query"> {{ query }}</div>
-        <br>
-        <input type="text" id="answer" onchange="answer()">
-        <br>
-        <div class="answers">
-            {%for i in range(10,0,-1)%}
-                <input id="answer{{ i }}" type="text" disabled="true"> <label>{{ i*1000 }} Points</label>
-                <br>
+    <div class="query"> {{ query }}</div>
+    <br>
+    <input type="text" id="userAnswer" onchange="checkAnswer()">
+    <br>
+    <div class="answers">
+        {%for i in range(10,0,-1)%}
+            <input id="answer{{ i }}" type="text" disabled="true"> <label>{{ i*1000 }} Points</label>
+            <br>
+        {%endfor%}
+    </div>
 
-            {%endfor%}
-        </div>
+    <script>
+        function checkAnswer() {
+            var x = document.getElementById("userAnswer").value;
+            var w = 11;
+            if(x.length < 3) return;
+            {% for i in answers %}
+                w--;
+                var y = '{{ i }}';
+                var regex = new RegExp('\\b' + x + '\\b', 'i');
 
-<script>
-function answer() {
-    x = document.getElementById("answer").value
-    {% for i in answers %}
-        if ({i}.includes(x) {
-    console.log("Woof");
-} else {
-    console.log("Non woof.");
-}
-    {% endfor %}
-
-}
-</script>
+                if (regex.test(y)) {
+                    var n = "answer" + w;
+                    console.log(n);
+                    document.getElementById(n).value = "{{ query }} " + y;
+                } else {
+                    console.log("Non woof.");
+                }
+            {% endfor %}
+        }
+    </script>
 </body>
 </html>
